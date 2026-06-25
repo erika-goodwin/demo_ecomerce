@@ -93,10 +93,6 @@ export function KameleoonProvider({ children }: { children: ReactNode }) {
     if (sdkStatus !== "ready" || !visitorCode) return "off";
 
     try {
-      console.log(
-        ">>>> getVariationKey called with flagKey:",
-        getVariation({ visitorCode, featureKey: flagKey }),
-      );
       return getVariation({ visitorCode, featureKey: flagKey }).key;
     } catch (e) {
       console.error(`[Kameleoon] getVariation error for "${flagKey}":`, e);
@@ -137,6 +133,31 @@ export function KameleoonProvider({ children }: { children: ReactNode }) {
       console.error("[Kameleoon] trackCustomData error:", e);
     }
   };
+
+  useEffect(() => {
+    if (sdkStatus !== "ready") return;
+
+    const LABELS: Record<number, string> = { 0: "userType", 1: "cartValue", 2: "preferredCategory" };
+    const tableData = Object.entries(customDataSnapshot).reduce<Record<string, { index: number; value: string }>>((acc, [idx, val]) => {
+      const i = Number(idx);
+      acc[LABELS[i] ?? `index_${i}`] = { index: i, value: val };
+      return acc;
+    }, {});
+
+    console.group("[Kameleoon] 📊 CustomData snapshot");
+    console.table(tableData);
+    if (conversionLog.length > 0) console.log("conversions fired:", conversionLog);
+    console.groupEnd();
+
+    if (typeof window !== "undefined") {
+      (window as any).__kam = {
+        visitorCode,
+        customData: customDataSnapshot,
+        customDataLabeled: tableData,
+        conversions: conversionLog,
+      };
+    }
+  }, [customDataSnapshot, conversionLog, sdkStatus, visitorCode]);
 
   return (
     <KameleoonContext.Provider
