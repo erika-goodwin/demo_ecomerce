@@ -9,7 +9,7 @@ const CTA_TEXT: Record<string, string> = {
 };
 
 export default function HeroBanner() {
-  const { getVariationKey } = useKameleoon();
+  const { getVariationKey, isReady } = useKameleoon();
   const variationKey = getVariationKey("hero-cta");
   const ctaText = CTA_TEXT[variationKey] ?? "Shop Now";
 
@@ -29,7 +29,7 @@ export default function HeroBanner() {
       </p>
       <Link
         href="#products"
-        className="bg-[#C4622D] text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-[#a84e22] transition-colors inline-block"
+        className={`bg-[#C4622D] text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-[#a84e22] transition-colors inline-block ${!isReady ? "invisible" : ""}`}
       >
         {ctaText}
       </Link>

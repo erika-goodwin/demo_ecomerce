@@ -4,13 +4,6 @@ import { useKameleoon } from "../context/KameleoonContext";
 export default function FreeShippingBanner() {
   const { isFeatureActive, isReady } = useKameleoon();
 
-  console.log(
-    ">>> FreeShippingBanner isReady:",
-    isReady,
-    'isFeatureActive("free-shipping-banner"):',
-    isFeatureActive("free-shipping-banner"),
-  );
-
   if (!isReady || !isFeatureActive("free-shipping-banner")) return null;
 
   return (
