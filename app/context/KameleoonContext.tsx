@@ -62,7 +62,8 @@ export function KameleoonProvider({ children }: { children: ReactNode }) {
 
     try {
       return isFeatureFlagActive({ visitorCode, featureKey: flagKey });
-    } catch {
+    } catch (e) {
+      console.error(`[Kameleoon] isFeatureFlagActive error for "${flagKey}":`, e);
       return false;
     }
   };
@@ -76,7 +77,8 @@ export function KameleoonProvider({ children }: { children: ReactNode }) {
         getVariation({ visitorCode, featureKey: flagKey }),
       );
       return getVariation({ visitorCode, featureKey: flagKey }).key;
-    } catch {
+    } catch (e) {
+      console.error(`[Kameleoon] getVariation error for "${flagKey}":`, e);
       return "off";
     }
   };

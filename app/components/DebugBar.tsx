@@ -29,47 +29,48 @@ export default function DebugBar() {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 z-50 bg-[#2C1810]/95 text-[#F5F0E8] text-xs font-mono border-t border-[#C4622D]/40 backdrop-blur-sm">
-      <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-center gap-6 flex-wrap">
-        <span className="font-semibold text-[#C4622D] shrink-0">
-          {STATUS_ICON[sdkStatus]} Kameleoon Debug
-        </span>
-
-        <span className="text-[#F5F0E8]/60 shrink-0">
-          visitor:{" "}
-          <span className="text-[#F5F0E8]">
-            {visitorCode || "—"}
+      <div className="max-w-screen-xl mx-auto px-4 py-2 flex items-center gap-6 flex-wrap ">
+        <div>
+          <span className="font-semibold text-[#C4622D] shrink-0">
+            {STATUS_ICON[sdkStatus]} Kameleoon Debug
           </span>
-        </span>
-
-        <span className="text-[#F5F0E8]/60 shrink-0">
-          free-shipping-banner:{" "}
-          <span
-            className={
-              shippingActive ? "text-green-400" : "text-[#F5F0E8]/40"
-            }
-          >
-            {sdkStatus === "ready" ? (shippingActive ? "ON" : "OFF") : "…"}
+        </div>
+        <div>
+          <span className="text-[#F5F0E8]/60 shrink-0 ml-4">
+            visitor:{" "}
+            <span className="text-[#F5F0E8]">{visitorCode || "—"}</span>
           </span>
-        </span>
 
-        <span className="text-[#F5F0E8]/60 shrink-0">
-          hero-cta:{" "}
-          <span className="text-[#F5F0E8]">
-            {sdkStatus === "ready" ? heroCta : "…"}
+          <span className="text-[#F5F0E8]/60 shrink-0 ml-4">
+            env:{" "}
+            <span className="text-[#F5F0E8]">
+              {process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? "unknown"}
+            </span>
           </span>
-        </span>
-
-        <span className="text-[#F5F0E8]/60 shrink-0">
-          env:{" "}
-          <span className="text-[#F5F0E8]">
-            {process.env.NEXT_PUBLIC_ENV ?? process.env.NODE_ENV ?? "unknown"}
+        </div>
+        <div>
+          <span className="text-[#F5F0E8]/60 shrink-0 ml-4">
+            free-shipping-banner:{" "}
+            <span
+              className={
+                shippingActive ? "text-green-400" : "text-[#F5F0E8]/40"
+              }
+            >
+              {sdkStatus === "ready" ? (shippingActive ? "ON" : "OFF") : "…"}
+            </span>
           </span>
-        </span>
 
-        <span className="text-[#F5F0E8]/60 shrink-0">
-          sdk:{" "}
-          <span className="text-[#F5F0E8]">{sdkStatus}</span>
-        </span>
+          <span className="text-[#F5F0E8]/60 shrink-0 ml-4">
+            hero-cta:{" "}
+            <span className="text-[#F5F0E8]">
+              {sdkStatus === "ready" ? heroCta : "…"}
+            </span>
+          </span>
+
+          <span className="text-[#F5F0E8]/60 shrink-0 ml-4">
+            sdk: <span className="text-[#F5F0E8]">{sdkStatus}</span>
+          </span>
+        </div>
 
         <button
           onClick={() => setCollapsed(true)}
