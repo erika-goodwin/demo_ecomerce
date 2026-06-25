@@ -1,7 +1,10 @@
 "use client";
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import DebugBar from "./components/DebugBar";
 import { CartProvider } from "./context/CartContext";
+import { KameleoonProviderSSR } from "@kameleoon/react-sdk";
+import { KameleoonProvider } from "./context/KameleoonContext";
 
 export default function RootLayout({
   children,
@@ -19,10 +22,22 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#F5F0E8] min-h-screen">
-        <CartProvider>
-          <Navbar />
-          {children}
-        </CartProvider>
+        <KameleoonProviderSSR
+          sdkParameters={{
+            siteCode: process.env.NEXT_PUBLIC_KAMELEOON_SITE_CODE ?? "",
+            configuration: {
+              environment: process.env.NODE_ENV === "development" ? "development" : "production",
+            },
+          }}
+        >
+          <KameleoonProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+              {process.env.NODE_ENV === "development" && <DebugBar />}
+            </CartProvider>
+          </KameleoonProvider>
+        </KameleoonProviderSSR>
       </body>
     </html>
   );

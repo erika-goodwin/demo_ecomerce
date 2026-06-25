@@ -1,7 +1,18 @@
 "use client";
 import Link from "next/link";
+import { useKameleoon } from "../context/KameleoonContext";
+
+const CTA_TEXT: Record<string, string> = {
+  off: "Shop Now",
+  discover_blends: "Discover Blends",
+  brew_today: "Brew Today",
+};
 
 export default function HeroBanner() {
+  const { getVariationKey } = useKameleoon();
+  const variationKey = getVariationKey("hero-cta");
+  const ctaText = CTA_TEXT[variationKey] ?? "Shop Now";
+
   return (
     <section className="bg-[#2C1810] text-[#F5F0E8] py-28 px-6 text-center">
       <p className="text-[#C4622D] uppercase tracking-widest text-sm mb-5 font-medium">
@@ -20,7 +31,7 @@ export default function HeroBanner() {
         href="#products"
         className="bg-[#C4622D] text-white px-10 py-4 rounded-full font-semibold text-lg hover:bg-[#a84e22] transition-colors inline-block"
       >
-        Shop Now
+        {ctaText}
       </Link>
     </section>
   );
