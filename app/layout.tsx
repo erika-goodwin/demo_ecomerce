@@ -27,6 +27,7 @@ export default function RootLayout({
             siteCode: process.env.NEXT_PUBLIC_KAMELEOON_SITE_CODE ?? "",
             configuration: {
               environment: process.env.NODE_ENV === "development" ? "development" : "production",
+              updateInterval: 5,
             },
           }}
         >
